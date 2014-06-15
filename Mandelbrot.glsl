@@ -19,8 +19,14 @@ void main()
       break;
   }
 
+  vec4 color = vec4(0.0);
+
   if(i < 255)
-    gl_FragColor = vec4(1.0);
-  else
-    gl_FragColor = vec4(0.0);
+  {
+    color.x = sin(float(i) / 3.0);
+    color.y = sin(float(i) / 6.0);
+    color.z = cos(float(i) / 12.0 + 3.141 / 4.0);
+  } 
+
+  gl_FragColor = color;
 }
