@@ -76,4 +76,6 @@ void RenderWidget::paintGL()
 
   glDrawArrays(GL_QUADS, 0, 4);
 
+  _shaderProgram.setUniformValue("center", QPointF(0.0, 0.0));
+
 }

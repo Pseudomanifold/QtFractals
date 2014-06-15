@@ -1,22 +1,27 @@
 uniform int iterations;
+uniform highp vec2 center;
 varying highp vec2 texture_out;
 
 void main()
 {
-  vec2 z  = texture_out;
-  z      *= (3.0, 2.0);
-  z      -= (2.0, 1.0);
+  vec2 z;
+  vec2 c;
 
-  vec2 c  = z;
+  c.x = 1.333 * (texture_out.x-0.5) + center.x;
+  c.y =         (texture_out.y-0.5) + center.y; 
+  z   = c;
 
   int i = 0;
   for(; i < 256; ++i)
   {
-    z  = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y);
-    z += c;
+    float x = z.x*z.x - z.y*z.y + c.x;
+    float y = z.x*z.y + z.y*z.x + c.y;
 
-    if( dot(z,z) > 4.0 ) 
+    if( x*x + y*y > 4.0 ) 
       break;
+
+    z.x = x;
+    z.y = y;
   }
 
   vec4 color = vec4(0.0);
