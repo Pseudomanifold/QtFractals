@@ -19,10 +19,13 @@ void RenderWidget::initializeGL()
   glEnable(GL_DEPTH_TEST);
 
   _shaderProgram.addShaderFromSourceCode(QGLShader::Vertex,
-                                         "attribute highp vec2 vertex;\n"
+                                         "attribute highp vec4 vertex;\n"
+                                         "attribute highp vec2 texture_in;\n"
+                                         "varying   highp vec2 texture_out;\n"
                                          "void main()\n"
                                          "{\n"
-                                         "  gl_Position = vec4(vertex.xy, 0.0, 0.0);\n"
+                                         "  gl_Position = vertex;\n"
+                                         "  texture_out = texture_in;\n"
                                          "}\n");
 
   bool fragmentShaderAdded
@@ -64,13 +67,13 @@ void RenderWidget::paintGL()
   };
 
   int vertexLocation  = _shaderProgram.attributeLocation("vertex");
-  int textureLocation = _shaderProgram.attributeLocation("texture");
+  int textureLocation = _shaderProgram.attributeLocation("texture_in");
 
   _shaderProgram.enableAttributeArray(vertexLocation);
   _shaderProgram.setAttributeArray(vertexLocation, quadVertices, 2);
+  _shaderProgram.enableAttributeArray(textureLocation);
+  _shaderProgram.setAttributeArray(textureLocation, textureCoordinates, 2);
 
   glDrawArrays(GL_QUADS, 0, 4);
 
-  _shaderProgram.enableAttributeArray(textureLocation);
-  _shaderProgram.setAttributeArray(textureLocation, textureCoordinates, 2);
 }
