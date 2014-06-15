@@ -1,0 +1,26 @@
+CMAKE_MINIMUM_REQUIRED( VERSION 2.8.11 )
+PROJECT( Fractals )
+
+IF( CMAKE_COMPILER_IS_GNUCXX )
+  SET( CMAKE_CXX_FLAGS "-Werror -Wall -pedantic -std=c++0x" )
+ENDIF()
+SET( CMAKE_AUTOMOC ON )
+
+FIND_PACKAGE( Qt5OpenGL REQUIRED )
+FIND_PACKAGE( Qt5Widgets REQUIRED )
+
+SET( SOURCES
+  Fractals.cc
+  MainWindow.cc
+  RenderWidget.cc
+)
+
+QT5_ADD_RESOURCES( RESOURCES Shaders.qrc )
+
+ADD_EXECUTABLE( fractals ${SOURCES} ${RESOURCES} )
+
+TARGET_LINK_LIBRARIES( fractals
+  Qt5::Gui
+  Qt5::OpenGL
+  Qt5::Widgets
+)
