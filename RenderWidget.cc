@@ -1,6 +1,7 @@
 #include "RenderWidget.hh"
 
 #include <QDebug>
+#include <QKeyEvent>
 #include <QMouseEvent>
 
 RenderWidget::RenderWidget(QWidget* parent)
@@ -8,6 +9,7 @@ RenderWidget::RenderWidget(QWidget* parent)
   , _centre(0.f, 0.f)
   , _scale(1.f)
 {
+  this->setFocusPolicy(Qt::StrongFocus);
 }
 
 RenderWidget::~RenderWidget()
@@ -53,6 +55,8 @@ void RenderWidget::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  _shaderProgram.setUniformValue("scale", _scale);
+
   const GLfloat quadVertices[] =
   {
     -1.f, -1.f,
@@ -87,7 +91,30 @@ void RenderWidget::mousePressEvent(QMouseEvent* event)
                                       -2.f / this->height() * windowPosition.y() + 1.f );
 
   absolutePosition *= _scale;
+
   _shaderProgram.setUniformValue("center", absolutePosition);
 
   this->update();
+}
+
+void RenderWidget::keyPressEvent(QKeyEvent* event)
+{
+  bool update = false;
+
+  if(event->type() == QEvent::KeyPress)
+  {
+    if(event->key() == Qt::Key_Plus)
+    {
+      _scale -= 0.01f;
+      update = true;
+    }
+    else if(event->key() == Qt::Key_Minus)
+    {
+      _scale += 0.01f;
+      update = true;
+    }
+  }
+
+  if(update)
+    this->update();
 }

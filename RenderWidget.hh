@@ -19,6 +19,7 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
     void paintGL();
 
     virtual void mousePressEvent(QMouseEvent* event);
+    virtual void keyPressEvent(QKeyEvent* event);
 
     QGLShaderProgram _shaderProgram;
 

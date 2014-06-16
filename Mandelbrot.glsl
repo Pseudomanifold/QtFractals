@@ -1,5 +1,6 @@
-uniform int iterations;
 uniform highp vec2 center;
+uniform highp float scale;
+
 varying highp vec2 texture_out;
 
 void main()
@@ -7,9 +8,9 @@ void main()
   vec2 z;
   vec2 c = texture_out;
 
-  c *= vec2(3.0, 2.0);
-  c -= vec2(2.0, 1.0);
-  c += center;
+  c *= scale * vec2(3.0, 2.0);
+  c -= scale * vec2(2.0, 1.0);
+  c += scale * center;
   
   z = c;
 
