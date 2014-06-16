@@ -23,6 +23,8 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
 
     QGLShaderProgram _shaderProgram;
 
+    int _iterations;
+
     QPointF _centre;
     float _scale;
 };

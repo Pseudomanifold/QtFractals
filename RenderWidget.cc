@@ -6,6 +6,7 @@
 
 RenderWidget::RenderWidget(QWidget* parent)
   : QGLWidget(parent)
+  , _iterations(512)
   , _centre(0.f, 0.f)
   , _scale(1.f)
 {
@@ -57,6 +58,7 @@ void RenderWidget::paintGL()
 
   _shaderProgram.setUniformValue("scale", _scale);
   _shaderProgram.setUniformValue("centre", _centre);
+  _shaderProgram.setUniformValue("iterations", _iterations);
 
   const GLfloat quadVertices[] =
   {

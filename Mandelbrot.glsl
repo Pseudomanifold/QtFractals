@@ -1,3 +1,5 @@
+uniform int iterations;
+
 uniform highp vec2 centre;
 uniform highp float scale;
 
@@ -13,7 +15,7 @@ void main()
   z = c;
 
   int i = 0;
-  for(; i < 256; ++i)
+  for(; i < iterations; ++i)
   {
     float x = z.x*z.x - z.y*z.y + c.x;
     float y = z.x*z.y + z.y*z.x + c.y;
@@ -27,7 +29,7 @@ void main()
 
   vec4 color = vec4(0.0);
 
-  if(i < 255)
+  if(i < iterations - 1)
   {
     color.x = sin(float(i) / 3.0);
     color.y = sin(float(i) / 6.0);
