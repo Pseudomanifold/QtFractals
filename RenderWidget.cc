@@ -87,12 +87,12 @@ void RenderWidget::paintGL()
 
 void RenderWidget::mousePressEvent(QMouseEvent* event)
 {
-  float xrange[] = { -2.0f * _scale, 1.0f * _scale };
-  float yrange[] = { -1.0f * _scale, 1.0f * _scale };
+  double xrange[] = { ( -2.0 * _scale + _centre.x() ), ( 1.0 * _scale + _centre.x() ) };
+  double yrange[] = { ( -1.0 * _scale + _centre.y() ), ( 1.0 * _scale +  _centre.y() ) };
 
   QPointF windowPosition   = event->windowPos();
   QPointF absolutePosition = QPointF(  ( xrange[1] - xrange[0] ) / this->width() * windowPosition.x()  + xrange[0],
-                                      -( yrange[1] - yrange[0] ) / this->height() * windowPosition.y() + yrange[1] );
+                                      -( yrange[1] - yrange[0] ) / static_cast<float>(this->height()) * windowPosition.y() + yrange[1] );
 
   _centre = absolutePosition;
 
