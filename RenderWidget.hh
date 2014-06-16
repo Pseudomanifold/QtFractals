@@ -21,6 +21,8 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
     virtual void mousePressEvent(QMouseEvent* event);
 
     QGLShaderProgram _shaderProgram;
+
+    QPointF _centre;
     float _scale;
 };
 

@@ -5,6 +5,7 @@
 
 RenderWidget::RenderWidget(QWidget* parent)
   : QGLWidget(parent)
+  , _centre(0.f, 0.f)
   , _scale(1.f)
 {
 }
@@ -85,5 +86,8 @@ void RenderWidget::mousePressEvent(QMouseEvent* event)
   QPointF absolutePosition = QPointF(  3.f / this->width() * windowPosition.x() - 2.f,
                                       -2.f / this->height() * windowPosition.y() + 1.f );
 
-  qDebug() << absolutePosition;
+  absolutePosition *= _scale;
+  _shaderProgram.setUniformValue("center", absolutePosition);
+
+  this->update();
 }

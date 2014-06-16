@@ -9,6 +9,7 @@ void main()
 
   c *= vec2(3.0, 2.0);
   c -= vec2(2.0, 1.0);
+  c += center;
   
   z = c;
 
