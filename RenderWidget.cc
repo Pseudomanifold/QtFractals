@@ -1,9 +1,11 @@
 #include "RenderWidget.hh"
 
 #include <QDebug>
+#include <QMouseEvent>
 
 RenderWidget::RenderWidget(QWidget* parent)
   : QGLWidget(parent)
+  , _scale(1.f)
 {
 }
 
@@ -75,7 +77,13 @@ void RenderWidget::paintGL()
   _shaderProgram.setAttributeArray(textureLocation, textureCoordinates, 2);
 
   glDrawArrays(GL_QUADS, 0, 4);
+}
 
-  _shaderProgram.setUniformValue("center", QPointF(0.0, 0.0));
+void RenderWidget::mousePressEvent(QMouseEvent* event)
+{
+  QPointF windowPosition   = event->windowPos();
+  QPointF absolutePosition = QPointF(  3.f / this->width() * windowPosition.x() - 2.f,
+                                      -2.f / this->height() * windowPosition.y() + 1.f );
 
+  qDebug() << absolutePosition;
 }

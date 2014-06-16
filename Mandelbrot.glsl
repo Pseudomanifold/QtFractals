@@ -5,11 +5,12 @@ varying highp vec2 texture_out;
 void main()
 {
   vec2 z;
-  vec2 c;
+  vec2 c = texture_out;
 
-  c.x = 1.333 * (texture_out.x-0.5) + center.x;
-  c.y =         (texture_out.y-0.5) + center.y; 
-  z   = c;
+  c *= vec2(3.0, 2.0);
+  c -= vec2(2.0, 1.0);
+  
+  z = c;
 
   int i = 0;
   for(; i < 256; ++i)

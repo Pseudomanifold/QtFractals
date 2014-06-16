@@ -18,7 +18,10 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
     void resizeGL(int w, int h);
     void paintGL();
 
+    virtual void mousePressEvent(QMouseEvent* event);
+
     QGLShaderProgram _shaderProgram;
+    float _scale;
 };
 
 #endif
