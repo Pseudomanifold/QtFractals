@@ -56,6 +56,7 @@ void RenderWidget::paintGL()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   _shaderProgram.setUniformValue("scale", _scale);
+  _shaderProgram.setUniformValue("centre", _centre);
 
   const GLfloat quadVertices[] =
   {
@@ -86,13 +87,14 @@ void RenderWidget::paintGL()
 
 void RenderWidget::mousePressEvent(QMouseEvent* event)
 {
+  float xrange[] = { -2.0f * _scale, 1.0f * _scale };
+  float yrange[] = { -1.0f * _scale, 1.0f * _scale };
+
   QPointF windowPosition   = event->windowPos();
-  QPointF absolutePosition = QPointF(  3.f / this->width() * windowPosition.x() - 2.f,
-                                      -2.f / this->height() * windowPosition.y() + 1.f );
+  QPointF absolutePosition = QPointF(  ( xrange[1] - xrange[0] ) / this->width() * windowPosition.x()  + xrange[0],
+                                      -( yrange[1] - yrange[0] ) / this->height() * windowPosition.y() + yrange[1] );
 
-  absolutePosition *= _scale;
-
-  _shaderProgram.setUniformValue("center", absolutePosition);
+  _centre = absolutePosition;
 
   this->update();
 }
@@ -105,12 +107,12 @@ void RenderWidget::keyPressEvent(QKeyEvent* event)
   {
     if(event->key() == Qt::Key_Plus)
     {
-      _scale -= 0.01f;
-      update = true;
+      _scale *= 0.9f;
+      update  = true;
     }
     else if(event->key() == Qt::Key_Minus)
     {
-      _scale += 0.01f;
+      _scale *= 1.1f;
       update = true;
     }
   }
