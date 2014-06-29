@@ -59,6 +59,7 @@ void RenderWidget::paintGL()
   _shaderProgram.setUniformValue("scale", _scale);
   _shaderProgram.setUniformValue("centre", _centre);
   _shaderProgram.setUniformValue("iterations", _iterations);
+  _shaderProgram.setUniformValue("c", QPointF(-1.0,0.1));
 
   const GLfloat quadVertices[] =
   {

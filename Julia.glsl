@@ -1,5 +1,6 @@
 uniform int iterations;
 
+uniform highp vec2 c;
 uniform highp vec2 centre;
 uniform highp float scale;
 
@@ -8,17 +9,14 @@ varying highp vec2 texture_out;
 void main()
 {
   vec2 z;
-  vec2 c;
-  c.x = ( texture_out.x - 0.5 ) + centre.x;
-  c.y = ( texture_out.y - 0.5 ) + centre.y;
-
-  z = c;
+  z.x = scale * ( 3.0 * texture_out.x - 2.0 ) + centre.x;
+  z.y = scale * ( 2.0 * texture_out.y - 1.0 ) + centre.y;
 
   int i = 0;
   for(; i < iterations; ++i)
   {
-    float x = z.x*z.x - z.y*z.y + c.x;
-    float y = z.x*z.y + z.y*z.x + c.y;
+    float x = z.x*z.x - z.y*z.y + c.x; 
+    float y = z.x*z.y + z.y*z.x + c.y; 
 
     if( x*x + y*y > 4.0 )
       break;
