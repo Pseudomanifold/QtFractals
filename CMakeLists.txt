@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.8.11 )
 PROJECT( Fractals )
 
 IF( CMAKE_COMPILER_IS_GNUCXX )
-  SET( CMAKE_CXX_FLAGS "-Werror -Wall -pedantic -std=c++0x" )
+  SET( CMAKE_CXX_FLAGS "-Werror -Wall -pedantic -std=c++11" )
 ENDIF()
 SET( CMAKE_AUTOMOC ON )
 

@@ -17,6 +17,28 @@ RenderWidget::~RenderWidget()
 {
 }
 
+void RenderWidget::loadJuliaFractal()
+{
+  _shaderProgram.removeAllShaders();
+  _shaderProgram.addShader(_vertexShader);
+  _shaderProgram.addShaderFromSourceFile(QGLShader::Fragment,
+                                             ":/Julia.glsl");
+
+  _shaderProgram.link();
+  _shaderProgram.bind();
+}
+
+void RenderWidget::loadMandelbrotFractal()
+{
+  _shaderProgram.removeAllShaders();
+  _shaderProgram.addShader(_vertexShader);
+  _shaderProgram.addShaderFromSourceFile(QGLShader::Fragment,
+                                             ":/Mandelbrot.glsl");
+
+  _shaderProgram.link();
+  _shaderProgram.bind();
+}
+
 void RenderWidget::initializeGL()
 {
   this->initializeOpenGLFunctions();
@@ -24,27 +46,19 @@ void RenderWidget::initializeGL()
 
   glEnable(GL_DEPTH_TEST);
 
-  _shaderProgram.addShaderFromSourceCode(QGLShader::Vertex,
-                                         "attribute highp vec4 vertex;\n"
-                                         "attribute highp vec2 texture_in;\n"
-                                         "varying   highp vec2 texture_out;\n"
-                                         "void main()\n"
-                                         "{\n"
-                                         "  gl_Position = vertex;\n"
-                                         "  texture_out = texture_in;\n"
-                                         "}\n");
+  _vertexShader = new QGLShader(QGLShader::Vertex, this);
 
-  bool fragmentShaderAdded
-    = _shaderProgram.addShaderFromSourceFile(QGLShader::Fragment,
-                                             ":/Mandelbrot.glsl");
+  _vertexShader->compileSourceCode(
+     "attribute highp vec4 vertex;\n"
+     "attribute highp vec2 texture_in;\n"
+     "varying   highp vec2 texture_out;\n"
+     "void main()\n"
+     "{\n"
+     "  gl_Position = vertex;\n"
+     "  texture_out = texture_in;\n"
+     "}\n");
 
-  if(!fragmentShaderAdded)
-    qDebug() << _shaderProgram.log();
-
-  _shaderProgram.link();
-  _shaderProgram.bind();
-
-  qDebug() << _shaderProgram.log();
+  this->loadMandelbrotFractal();
 }
 
 void RenderWidget::resizeGL(int w, int h)

@@ -2,6 +2,7 @@
 #define RenderWidget_hh__
 
 #include <QGLWidget>
+#include <QGLShader>
 #include <QGLShaderProgram>
 #include <QOpenGLFunctions>
 
@@ -9,11 +10,15 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
 {
   Q_OBJECT
 
-  public:
+public:
     RenderWidget(QWidget* widget = nullptr);
     ~RenderWidget();
 
-  private:
+public slots:
+    void loadJuliaFractal();
+    void loadMandelbrotFractal();
+
+private:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
@@ -21,6 +26,7 @@ class RenderWidget : public QGLWidget, protected QOpenGLFunctions
     virtual void mousePressEvent(QMouseEvent* event);
     virtual void keyPressEvent(QKeyEvent* event);
 
+    QGLShader* _vertexShader;
     QGLShaderProgram _shaderProgram;
 
     int _iterations;
